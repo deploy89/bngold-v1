@@ -511,6 +511,19 @@ button[onclick="renderChat()"] { font-size: 24px !important; line-height: 1 !imp
 /* ===== FIX รอบ3: แถบหัวเว็บแคบลง ===== */
 body > div.sticky.top-0.z-40 { padding-top: 6px !important; padding-bottom: 6px !important; }
 
+
+:root { --logo-c:#ffffff; --title-c:#ffffff; --icon-c:#e8e8e8; }
+html[data-theme="light"] { --logo-c:#111111; --title-c:#111111; --icon-c:#111111; }
+.diamond { background: var(--logo-c) !important; box-shadow: 0 0 6px rgba(128,128,128,.35) !important; }
+.diamond-center { background: var(--logo-c) !important; box-shadow: 0 0 8px rgba(128,128,128,.4) !important; }
+.logo-text-gold { color: var(--title-c) !important; text-shadow: 0 0 10px rgba(128,128,128,.25) !important; }
+html[data-theme="light"] .logo-text-gold { text-shadow: none !important; }
+.theme-btn, .theme-btn-label, .lang-btn { color: var(--icon-c) !important; }
+.text-yellow-300, .text-yellow-400, .text-yellow-500, .text-yellow-600, [style*="color:#eab308"], [style*="color: #eab308"], [style*="color:#f0b90b"], [style*="color: #f0b90b"], [style*="color:#facc15"], [style*="color: #facc15"] { color: #ffffff !important; }
+html[data-theme="light"] .text-yellow-300, html[data-theme="light"] .text-yellow-400, html[data-theme="light"] .text-yellow-500, html[data-theme="light"] .text-yellow-600, html[data-theme="light"] [style*="color:#eab308"], html[data-theme="light"] [style*="color: #eab308"], html[data-theme="light"] [style*="color:#f0b90b"], html[data-theme="light"] [style*="color: #f0b90b"], html[data-theme="light"] [style*="color:#facc15"], html[data-theme="light"] [style*="color: #facc15"] { color: #111111 !important; }
+.profile-avatar { border: none !important; }
+#chatAvatar { background:#2b2b2b; color:#ffffff; font-size:13px; }
+html[data-theme="light"] #chatAvatar { background:#111111; color:#ffffff; }
 </style>
 </head>
 <body>
@@ -532,11 +545,11 @@ body > div.sticky.top-0.z-40 { padding-top: 6px !important; padding-bottom: 6px 
 </div>
 <div class="flex gap-2 items-center">
 <!-- ปุ่มเปลี่ยนธีม (เพิ่มใหม่): ขาว -> ดำ -> อัตโนมัติ -->
-<button class="theme-btn" id="themeToggleBtn" onclick="toggleBgTheme()" title="ธีม: ดำ (กดเพื่อเปลี่ยน)" aria-label="เปลี่ยนธีม">
-<i class="fas fa-moon" id="themeToggleIcon"></i><span class="theme-btn-label" id="themeToggleLabel">โหมดมืด</span>
-</button>
 <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">
 <span class="flag" id="langFlag">🇹🇭</span><span id="langText">TH</span>
+</button>
+<button class="theme-btn" id="themeToggleBtn" onclick="toggleBgTheme()" title="ธีม: ดำ (กดเพื่อเปลี่ยน)" aria-label="เปลี่ยนธีม">
+<i class="fas fa-moon" id="themeToggleIcon"></i><span class="theme-btn-label" id="themeToggleLabel">โหมดมืด</span>
 </button>
 <!-- ไอคอนฝ่ายบริการ: สมาชิก = แชทบัญชีตัวเอง, ผู้เยี่ยมชม (ไม่ล็อกอิน) = guest chat -->
 <button class="theme-btn" id="supportChatBtn" onclick="openSupportChat()" title="ฝ่ายบริการลูกค้า" aria-label="ฝ่ายบริการลูกค้า"><i class="fas fa-headset"></i></button>
@@ -970,7 +983,7 @@ QR Code
 <div class="bg-[#0a0a0a] w-full max-w-md h-[80vh] rounded-3xl border border-[#1a1a1a] flex flex-col overflow-hidden">
 <div class="p-4 bg-[#111] flex justify-between items-center border-b border-[#1a1a1a]">
 <div class="flex items-center gap-3">
-<div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold text-sm">B</div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center" id="chatAvatar"><i class="fas fa-headset"></i></div>
 <span class="font-bold text-white" id="chatTitle">บริการลูกค้า</span>
 </div>
 <div class="flex items-center gap-3">
@@ -3338,9 +3351,12 @@ async function applySettings() {
   document.getElementById('siteTitle').textContent = siteName;
   document.title = siteName + ' - Trading Platform';
   // สีชื่อเว็บไซต์ (แก้จากหลังบ้าน)
-  const titleColor = settings.siteTitleColor || '#f0b90b';
-  document.getElementById('siteTitle').style.color = titleColor;
-  document.getElementById('siteTitle').style.textShadow = '0 0 10px ' + titleColor + '4d';
+  const titleColor = settings.siteTitleColor;
+  if (titleColor) document.documentElement.style.setProperty('--title-c', titleColor);
+  const logoColor = settings.siteLogoColor;
+  if (logoColor) document.documentElement.style.setProperty('--logo-c', logoColor);
+  const iconColor = settings.siteIconColor;
+  if (iconColor) document.documentElement.style.setProperty('--icon-c', iconColor);
   // คำโปรยหน้าแรก: ไม่มี default — แสดงเฉพาะเมื่อแอดมินตั้งค่า welcomeText เอง
   // ค่าว่าง/null/ไม่มี key = ซ่อน element ทั้งก้อน
   const welcomeEl = document.getElementById('homeWelcomeText');
