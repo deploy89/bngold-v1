@@ -666,7 +666,7 @@ html[data-theme="light"] .chat-back-btn { background:#fff; color:#1f2937; border
 <h3 class="font-bold mb-4 text-white"><i class="fas fa-info-circle text-blue-400 mr-2"></i><span data-i18n="siteInfoCard">ข้อมูลเว็บไซต์</span></h3>
 <div class="space-y-4">
 <div class="form-group"><label data-i18n="lblSiteName">ชื่อเว็บไซต์ (แสดงข้างโลโก้)</label><input id="settingsSiteName" placeholder="Binance Gold" type="text"/></div>
-<div class="form-group"><label data-i18n="lblSiteColor">สีชื่อเว็บไซต์</label><input id="settingsSiteColor" type="color" value="#f0b90b" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div><div class="form-group"><label>สีโลโก้เว็บไซต์</label><input id="settingsLogoColor" type="color" value="#ffffff" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div><div class="form-group"><label>สีไอคอนหัวเว็บ</label><input id="settingsIconColor" type="color" value="#e8e8e8" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div>
+<div class="form-group"><label data-i18n="lblSiteColor">สีชื่อเว็บไซต์</label><input id="settingsSiteColor" type="color" value="#f0b90b" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div><div class="form-group"><label>สีโลโก้เว็บไซต์</label><input id="settingsLogoColor" type="color" value="#f0b90b" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div><div class="form-group"><label>สีไอคอนหัวเว็บ</label><input id="settingsIconColor" type="color" value="#e8e8e8" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div>
 <div class="form-group"><label data-i18n="lblBgColor">สีพื้นหลังเว็บไซต์</label><input id="settingsSiteBgColor" type="color" value="#050505" style="height:52px;padding:6px !important;cursor:pointer;background:#111 !important;"/></div>
 <div class="form-group"><label data-i18n="lblBgImage">รูปภาพพื้นหลังเว็บไซต์ (ทับสีพื้นหลัง)</label>
 <img src="" class="mb-2 hidden" id="siteBgPreview" style="width:100%;height:120px;object-fit:cover;border-radius:8px;background:#111;">
@@ -2218,7 +2218,7 @@ async function loadSettings() {
   document.getElementById('settingsMinWithdraw').value = settings.minWithdraw || settings.min_withdraw || 10;
   document.getElementById('settingsSiteName').value = settings.siteName || settings.site_name || 'Binance Gold';
   document.getElementById('settingsSiteColor').value = settings.siteTitleColor || '#f0b90b';
-  document.getElementById('settingsLogoColor').value = settings.siteLogoColor || '#ffffff';
+  document.getElementById('settingsLogoColor').value = settings.siteLogoColor || '#f0b90b';
   document.getElementById('settingsIconColor').value = settings.siteIconColor || '#e8e8e8';
   document.getElementById('settingsSiteBgColor').value = settings.siteBgColor || '#050505';
   const bgPrev = document.getElementById('siteBgPreview');
