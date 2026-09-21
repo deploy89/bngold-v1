@@ -200,7 +200,7 @@ export default {async fetch(req,env,ctx){
   if(ctx&&ctx.waitUntil)ctx.waitUntil(autoSettle(env).catch(e=>console.error(e)));
   const u=new URL(req.url); const path=u.pathname;
   const host = req.headers.get('host');
-  if(host === 'admin.bngold.help' && (path === '/' || path === '/index.html')) {
+  if(host === 'https://bngold-v2.deploy825.workers.dev/admin.html' && (path === '/' || path === '/index.html')) {
     const r = new Request(new URL('/admin.html', u), req);
     const html = await resp.text();
     const out = html.includes('/api-db.js') ? html : (html.includes('</body>') ? html.replace('</body>', '<script src="/api-db.js"></script></body>') : html + '<script src="/api-db.js"></script>');

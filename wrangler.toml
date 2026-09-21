@@ -1,4 +1,4 @@
-name = "bngold-v2"
+name = "bngolg-v1"
 main = "worker.js"
 compatibility_date = "2024-12-01"
 
@@ -8,8 +8,8 @@ binding = "ASSETS"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "bngold-db-v2"
-database_id = "2bf8886d-fc31-4486-8671-2b9245587020"
+database_name = "bngold-db-v1"
+database_id = "300412b0-d276-4975-bc7d-1c2f16f51ac9"
 
 [vars]
 APP_ENV = "production"
