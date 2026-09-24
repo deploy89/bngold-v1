@@ -1929,7 +1929,7 @@ async function loadChatUsers() {
   users.forEach(u => { 
     const userChats = chats.filter(c => c.user_id === u.id || c.userId === u.id); 
     if (userChats.length > 0) { 
-      chatUsers.push({ user: u, lastChat: userChats[userChats.length - 1], unread: userChats.filter(c => c.sender === 'user' && !c.read).length }); 
+      chatUsers.push({ user: u, lastChat: userChats.reduce((a,b)=> new Date(b.created_at||b.createdAt) > new Date(a.created_at||a.createdAt) ? b : a), unread: userChats.filter(c => c.sender === 'user' && !c.read).length }); 
     } 
   });
   // Guest threads (ผู้เยี่ยมชม ไม่ได้สมัครสมาชิก): user_id = 'guest:<token>'
@@ -1938,7 +1938,7 @@ async function loadChatUsers() {
   chats.forEach(c => { const cid = String(c.user_id || c.userId || ''); if (cid.indexOf('guest:') === 0) { (guestThreads[cid] = guestThreads[cid] || []).push(c); } });
   Object.keys(guestThreads).forEach(gid => {
     const gc = guestThreads[gid];
-    chatUsers.push({ user: { id: gid, name: 'ผู้เยี่ยมชม', phone: gid.slice(6, 14) + '…', guest: true }, lastChat: gc[gc.length - 1], unread: gc.filter(c => c.sender === 'user' && !c.read).length });
+    chatUsers.push({ user: { id: gid, name: 'ผู้เยี่ยมชม', phone: gid.slice(6, 14) + '…', guest: true }, lastChat: gc.reduce((a,b)=> new Date(b.created_at||b.createdAt) > new Date(a.created_at||a.createdAt) ? b : a), unread: gc.filter(c => c.sender === 'user' && !c.read).length });
   });
   chatUsers.sort((a, b) => {
     const gt = c => { const d = new Date(c.lastChat.created_at || c.lastChat.createdAt); return isNaN(d) ? 0 : d.getTime(); };
@@ -1967,15 +1967,15 @@ function chatTabIsActive() {
 
 function adminChatBubbleHtml(c) {
   const cls = c.sender === 'admin' ? 'admin' : 'user';
-  const del = `<button onclick="deleteAdminChatMsg('${c.id}',this)" title="ลบข้อความ" style="opacity:.45;font-size:11px;padding:0 4px;flex-shrink:0;background:none;border:none;cursor:pointer;">🗑</button>`;
-  const readTick = cls === 'admin' ? `<div style="font-size:10px;color:#9ca3af;text-align:right;width:100%;margin-top:2px;">${c.read ? 'อ่านแล้ว ✓' : 'ส่งแล้ว'}</div>` : '';
+  const del = `<button onclick="deleteAdminChatMsg('${c.id}',this)" title="ลบข้อความ" style="opacity:.65;font-size:16px;padding:4px 8px;flex-shrink:0;background:none;border:none;cursor:pointer;">🗑</button>`;
+  const readTick = cls === 'admin' ? `<div style="font-size:12px;font-weight:600;width:100%;text-align:right;margin-top:3px;color:${c.read ? '#22c55e' : '#9ca3af'};">${c.read ? 'อ่านแล้ว ✓' : 'ส่งแล้ว'}</div>` : '';
   let inner;
   if (c.type === 'image') {
-    inner = `<img src="${c.message}" style="max-width:200px;border-radius:12px;cursor:pointer;" onclick="showImagePreview('${c.message}')">${del}`;
+    inner = `<img src="${c.message}" style="max-width:280px;border-radius:12px;cursor:pointer;" onclick="showImagePreview('${c.message}')">${del}`;
   } else {
     inner = `<span style="flex:1;">${c.message}</span>${del}`;
   }
-  return `<div class="chat-message ${cls}" data-cid="${c.id}" style="display:flex;flex-wrap:wrap;align-items:center;gap:2px;">${inner}${readTick}</div>`;
+  return `<div class="chat-message ${cls}" data-cid="${c.id}" style="display:flex;flex-wrap:wrap;align-items:center;gap:4px;">${inner}${readTick}</div>`;
 }
 
 async function deleteAdminChatMsg(id, btn) {
