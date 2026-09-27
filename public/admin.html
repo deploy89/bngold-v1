@@ -282,8 +282,10 @@ html[data-theme="light"] .chat-back-btn { background:#fff; color:#1f2937; border
 }
 @media (max-width: 380px) { .grid-4 { grid-template-columns:1fr; } }
 
-/* ช่องติ๊กสิทธิ์ผู้ดูแล: มองเห็นชัด */
-.newAdminPerm { width: 18px; height: 18px; accent-color: #f0b90b; cursor: pointer; flex-shrink: 0; }
+/* ช่องติ๊กสิทธิ์ผู้ดูแล: เห็นเครื่องหมายถูกชัดเจน */
+.newAdminPerm { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border: 2px solid #555; border-radius: 4px; background: #111; cursor: pointer; position: relative; flex-shrink: 0; margin: 0; }
+.newAdminPerm:checked { background: #f0b90b; border-color: #f0b90b; }
+.newAdminPerm:checked::after { content: '✔'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #000; font-size: 14px; font-weight: 900; line-height: 1; }
 </style>
 </head>
 <body>
